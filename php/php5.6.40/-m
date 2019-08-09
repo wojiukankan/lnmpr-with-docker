@@ -1,0 +1,17 @@
+bcmath
+bz2
+calendar
+gd
+mcrypt
+memcache
+mysql
+mysqli
+pdo_mysql
+odbc
+soap
+sockets
+wddx
+xmlrpc
+xdebug
+xsl
+zip

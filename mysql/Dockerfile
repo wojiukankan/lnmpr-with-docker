@@ -1,15 +1,16 @@
-FROM lzhd:php
+FROM php737
 
 ENV NGINX_VERSION 1.16.0
 
 RUN set -eux; \
     apk update ;\
-    apk add --no-cache openssl-dev pcre-dev;\
     apk add --no-cache --virtual .build-deps \
     gcc \
     g++ \
     libc-dev \
     make \
+    openssl-dev \
+    pcre-dev \
     zlib-dev \
     linux-headers \
     libxslt-dev \
@@ -26,7 +27,7 @@ RUN set -eux; \
 && tar -zxvf nginx.tar.gz \
 && cd nginx-$NGINX_VERSION \
 && ./configure --user=www-data --group=www-data --with-http_ssl_module --with-http_stub_status_module --with-http_gzip_static_module --with-http_v2_module  --with-http_realip_module --with-http_flv_module --with-http_mp4_module --with-pcre-jit \
-&& make -j "$(nproc)"  && make install && make clean \
+&& 	make -j "$(nproc)"  && make install && make clean \
 && apk del --no-network .build-deps \
 && mkdir /usr/local/nginx/conf/conf.d \
 && cd / && rm -rf ~/nginx*

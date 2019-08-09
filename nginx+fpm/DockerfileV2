@@ -1,0 +1,14 @@
+FROM lzhd:1
+
+RUN apk add libmemcached-dev\
+&& apk add --no-cache --virtual .build-deps autoconf dpkg-dev dpkg file g++ gcc libc-dev make pkgconf re2c \
+&& pecl install memcached-2.2.0 \
+&& docker-php-ext-enable memcached \
+&& echo 'date.timezone = PRC'> /usr/local/etc/php/conf.d/docker-php-timezone.ini
+WORKDIR /usr/local/nginx/html
+
+STOPSIGNAL SIGQUIT
+
+EXPOSE 80
+
+CMD /usr/local/nginx/sbin/nginx && php-fpm
